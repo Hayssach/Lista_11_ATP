@@ -12,15 +12,15 @@ int main() {
         return 1;
     }
 
-    int n;
-    fscanf(fmenu, "%d", &n);  // n˙mero de itens no menu
+    int m;
+    fscanf(fmenu, "%d", &m);  // n√∫mero de itens no menu
 
-    char nomes[MAX_ITENS][MAX_NOME];
-    float precos[MAX_ITENS];
+    char nom s[MAX_ITENS][MAX_NOME];
+    float p[MAX_ITENS];
 
-    // LÍ os itens do menu
-    for (int i = 0; i < n; i++) {
-        fscanf(fmenu, "%s %f", nomes[i], &precos[i]);
+    // L√™ os itens do menu
+    for (int i = 0; i < m; i++) {
+        fscanf(fmenu, "%s %f", nomes[i], &p[i]);
     }
 
     // Mostra o menu
@@ -29,22 +29,22 @@ int main() {
         printf("%d - %s : R$ %.2f\n", i + 1, nomes[i], precos[i]);
     }
 
-    int quantidades[MAX_ITENS] = {0};
-    int escolha, qtd;
+    int qtd[MAX_ITENS] = {0};
+    int e, quantidade;
 
-    // LÍ pedidos do usu·rio
+    // L√™ pedidos do usu√°rio
     while (1) {
-        printf("Digite o n˙mero do item que deseja comprar (0 para finalizar): ");
-        scanf("%d", &escolha);
-        if (escolha == 0) break;
-        if (escolha < 1 || escolha > n) {
-            printf("OpÁ„o inv·lida!\n");
+        printf("Digite o n√∫mero do item que deseja comprar (0 para finalizar): ");
+        scanf("%d", &e);
+        if (e == 0) break;
+        if (e < 1 || e > m) {
+            printf("Op√ß√£o inv√°lida!\n");
             continue;
         }
 
         printf("Digite a quantidade de %s: ", nomes[escolha - 1]);
-        scanf("%d", &qtd);
-        quantidades[escolha - 1] += qtd;
+        scanf("%d", & quantidade);
+        qtd[e - 1] += quantidade;
     }
 
     // Gera boleto.txt
@@ -55,15 +55,15 @@ int main() {
     }
 
     fprintf(fbol, "====== BOLETO ======\n");
-    float total = 0.0;
-    for (int i = 0; i < n; i++) {
-        if (quantidades[i] > 0) {
-            float subt = quantidades[i] * precos[i];
+    float t = 0.0;
+    for (int i = 0; i < m; i++) {
+        if (qtd[i] > 0) {
+            float s = qtd[i] * p[i];
             fprintf(fbol, "%s x %d = R$ %.2f\n", nomes[i], quantidades[i], subt);
-            total += subt;
+            t += s;
         }
     }
-    fprintf(fbol, "TOTAL A PAGAR: R$ %.2f\n", total);
+    fprintf(fbol, "TOTAL A PAGAR: R$ %.2f\n", t);
     fclose(fbol);
 
     printf("\nPedido registrado no arquivo boleto.txt\n");
