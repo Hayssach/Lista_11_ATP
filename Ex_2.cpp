@@ -3,32 +3,32 @@
 #include <stdlib.h>
 #include <stdio.h>
 
-// Função para arredondar valor para "casas" casas decimais
-double arredondar(double valor, int casas) {
-    double fator = pow(10, casas);
-    return round(valor * fator) / fator;
+// FunÃ§Ã£o para arredondar valor das casas decimais
+double arredondando(double v, int c) {
+    double f = pow(10, c);
+    return round(v * f) / f;
 }
 
 int main() {
-    double numero;
-    int casas;
-    char opcao;
+    double num;
+    int CASAS;
+    char op;
 
-    printf("Digite um número decimal: ");
-    scanf("%lf", &numero);
+    printf("Digite um nÃºmero decimal: ");
+    scanf("%lf", &num);
 
-    printf("Deseja informar o número de casas decimais? (s/n): ");
-    scanf(" %c", &opcao);
+    printf("Deseja informar o nÃºmero de casas decimais? (s/n): ");
+    scanf(" %c", &op);
 
-    if (opcao == 's' || opcao == 'S') {
-        printf("Digite o número de casas decimais: ");
-        scanf("%d", &casas);
+    if (op == 's' || op == 'S') {
+        printf("Digite o nÃºmero de casas decimais: ");
+        scanf("%d", &CASAS);
     } else {
-        casas = 0;  // padrão
+        CASAS = 0;  // padrÃ£o
     }
 
-    double resultado = arredondar(numero, casas);
-    printf("Resultado: %.10f\n", resultado);
+    double r = arredondando(num, CASAS);
+    printf("Resultado: %.10f\n", r);
 
     return 0;
 }
