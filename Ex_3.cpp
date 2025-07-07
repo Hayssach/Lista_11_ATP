@@ -3,88 +3,88 @@
 #include <time.h>
 #include <string.h>
 
-#define CARTELAS 5     // número de cartelas a serem geradas
+#define CARTELAS 5     // nÃºmero de cartelas a serem geradas
 #define COLUNAS 5      // B, I, N, G, O
 #define LINHAS 5       // 5 linhas por cartela
 
-// Gera um número aleatório único dentro de um intervalo
-int numeroUnico(int usados[], int tamanho, int min, int max) {
-    int num, i;
+// Gera um nÃºmero aleatÃ³rio Ãºnico dentro de um intervalo
+int numUnico(int u[], int tam, int minimo, int maximo) {
+    int numero, j;
     do {
-        num = rand() % (max - min + 1) + min;
-        for (i = 0; i < tamanho; i++) {
-            if (usados[i] == num)
+        numero = rand() % (maximo - minimo + 1) + minimo;
+        for (j = 0; i < tam; j++) {
+            if (u[j] == numero)
                 break;
         }
-    } while (i != tamanho);
-    return num;
+    } while (j != tam);
+    return numero;
 }
 
 void gerarCartela(int cartela[LINHAS][COLUNAS]) {
-    int usados[LINHAS];
-    int i, j;
+    int us[LINHAS];
+    int a, b;
 
-    for (j = 0; j < COLUNAS; j++) {
-        int min = j * 15 + 1;
-        int max = min + 14;
-        int qtd = LINHAS;
+    for (b = 0; b < COLUNAS; b++) {
+        int minimo = b * 15 + 1;
+        int maximo = minimo + 14;
+        int quantidade = LINHAS;
 
-        if (j == 2) qtd = 4; // Coluna N terá 4 números (posição do meio é "FREE")
+        if (b == 2) quantidade = 4; // Coluna N terÃ¡ 4 nÃºmeros (posiÃ§Ã£o do meio Ã© "FREE")
 
-        for (i = 0; i < qtd; i++) {
-            usados[i] = numeroUnico(usados, i, min, max);
+        for (a = 0; a < quantidade; a++) {
+            us[a] = numeroUnico(us, j, minimo, maximo);
         }
 
-        for (i = 0; i < LINHAS; i++) {
-            if (j == 2 && i == 2) {
-                cartela[i][j] = -1; // posição "FREE"
+        for (a = 0; a < LINHAS; a++) {
+            if (b == 2 && a == 2) {
+                cartela[a][b] = -1; // posiÃ§Ã£o "FREE"
             } else {
-                int idx = (j == 2 && i > 1) ? i - 1 : i;
-                cartela[i][j] = usados[idx];
+                int indx = (a == 2 && b > 1) ? a - 1 : a;
+                cartela[a][b] = us[indx];
             }
         }
     }
 }
 
-void salvarCartelasCSV(const char *nomeArquivo, int qtdCartelas) {
-    FILE *fp = fopen(nomeArquivo, "w");
-    if (fp == NULL) {
+void salvarCartelasCSV(const char *nomeArq, int qtdCart) {
+    FILE *fop = fopen(nomeArq, "w");
+    if (fop == NULL) {
         printf("Erro ao criar o arquivo.\n");
         return;
     }
 
-    fprintf(fp, "B,I,N,G,O\n");
+    fprintf(fop, "B,I,N,G,O\n");
 
-    for (int c = 0; c < qtdCartelas; c++) {
+    for (int g = 0; g < qtdCart; g++) {
         int cartela[LINHAS][COLUNAS];
         gerarCartela(cartela);
 
-        for (int i = 0; i < LINHAS; i++) {
-            for (int j = 0; j < COLUNAS; j++) {
-                if (j > 0) fprintf(fp, ",");
-                if (cartela[i][j] == -1)
-                    fprintf(fp, "FREE");
+        for (int a = 0; a < LINHAS; a++) {
+            for (int b = 0; b < COLUNAS; b++) {
+                if (b > 0) fprintf(fop, ",");
+                if (cartela[a][b] == -1)
+                    fprintf(fop, "FREE");
                 else
-                    fprintf(fp, "%d", cartela[i][j]);
+                    fprintf(fop, "%d", cartela[a][b]);
             }
-            fprintf(fp, "\n");
+            fprintf(fop, "\n");
         }
 
-        if (c < qtdCartelas - 1) fprintf(fp, "\n"); // espaço entre cartelas
+        if (g < qtdCart - 1) fprintf(fop, "\n"); // espaÃ§o entre cartelas
     }
 
-    fclose(fp);
-    printf("Cartelas geradas e salvas em '%s'\n", nomeArquivo);
+    fclose(fop);
+    printf("Cartelas geradas e salvas em '%s'\n", nomeArq);
 }
 
 int main() {
     srand(time(NULL)); // inicializa semente do rand
 
-    int qtd;
+    int qdt;
     printf("Quantas cartelas deseja gerar? ");
-    scanf("%d", &qtd);
+    scanf("%d", &qdt);
 
-    salvarCartelasCSV("cartelas_bingo.csv", qtd);
+    salvarCartelasCSV("cartelas_bingo.csv", qdt);
 
     return 0;
 }
