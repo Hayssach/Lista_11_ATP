@@ -1,118 +1,118 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-void escreverArquivo(const char *nomeArquivo, int **A, int **B, int n) {
-    FILE *f = fopen(nomeArquivo, "w");
-    if (!f) {
+void escreveArquivo(const char *nomeArq, int **B, int **C, int m) {
+    FILE *fop = fopen(nomeArq, "w");
+    if (!fop) {
         perror("Erro ao abrir o arquivo");
         exit(1);
     }
 
-    fprintf(f, "%d\n", n);
-
-    // Escreve matriz A
-    for (int i = 0; i < n; i++)
-        for (int j = 0; j < n; j++)
-            fprintf(f, "%d%c", A[i][j], (j == n - 1) ? '\n' : ' ');
+    fprintf(fop, "%d\n", m);
 
     // Escreve matriz B
-    for (int i = 0; i < n; i++)
-        for (int j = 0; j < n; j++)
-            fprintf(f, "%d%c", B[i][j], (j == n - 1) ? '\n' : ' ');
+    for (int i = 0; i < m; i++)
+        for (int j = 0; j < m; j++)
+            fprintf(fop, "%d%c", B[i][j], (j == m - 1) ? '\n' : ' ');
 
-    fclose(f);
+    // Escreve matriz C
+    for (int i = 0; i < m; i++)
+        for (int j = 0; j < m; j++)
+            fprintf(f, "%d%c", C[i][j], (j == m - 1) ? '\n' : ' ');
+
+    fclose(fop);
 }
 
-void lerArquivo(const char *nomeArquivo, int ***A, int ***B, int *n) {
-    FILE *f = fopen(nomeArquivo, "r");
-    if (!f) {
+void leArquivo(const char *nomeArq, int ***B, int ***C, int *m) {
+    FILE *fop = fopen(nomeArq, "r");
+    if (!fop) {
         perror("Erro ao abrir o arquivo");
         exit(1);
     }
 
-    fscanf(f, "%d", n);
+    fscanf(fop, "%d", m);
 
-    // Aloca memória
-    *A = malloc((*n) * sizeof(int *));
-    *B = malloc((*n) * sizeof(int *));
-    for (int i = 0; i < *n; i++) {
-        (*A)[i] = malloc((*n) * sizeof(int));
-        (*B)[i] = malloc((*n) * sizeof(int));
+    // Aloca memÃ³ria
+    *B = malloc((*m) * sizeof(int *));
+    *C = malloc((*m) * sizeof(int *));
+    for (int i = 0; i < *m; i++) {
+        (*B)[i] = malloc((*m) * sizeof(int));
+        (*C)[i] = malloc((*m) * sizeof(int));
     }
 
-    // Lê matriz A
-    for (int i = 0; i < *n; i++)
-        for (int j = 0; j < *n; j++)
-            fscanf(f, "%d", &(*A)[i][j]);
+    // LÃª matriz B
+    for (int i = 0; i < *m; i++)
+        for (int j = 0; j < *m; j++)
+            fscanf(fop, "%d", &(*B)[i][j]);
 
-    // Lê matriz B
-    for (int i = 0; i < *n; i++)
-        for (int j = 0; j < *n; j++)
-            fscanf(f, "%d", &(*B)[i][j]);
+    // LÃª matriz C
+    for (int i = 0; i < *m; i++)
+        for (int j = 0; j < *m; j++)
+            fscanf(fop, "%d", &(*C)[i][j]);
 
-    fclose(f);
+    fclose(fop);
 }
 
-void somarMatrizes(int **A, int **B, int n, int **S) {
-    for (int i = 0; i < n; i++)
-        for (int j = 0; j < n; j++)
-            S[i][j] = A[i][j] + B[i][j];
+void somaMatrizes(int **B, int **C, int m, int **K) {
+    for (int i = 0; i < m; i++)
+        for (int j = 0; j < m; j++)
+            K[i][j] = B[i][j] + C[i][j];
 }
 
-void imprimirMatriz(int **M, int n) {
-    for (int i = 0; i < n; i++) {
-        for (int j = 0; j < n; j++)
-            printf("%d ", M[i][j]);
+void imprimeMatriz(int **A, int m) {
+    for (int i = 0; i < m; i++) {
+        for (int j = 0; j < m; j++)
+            printf("%d ", A[i][j]);
         printf("\n");
     }
 }
 
 int main() {
-    int n;
-    printf("Informe a dimensão da matriz quadrada: ");
-    scanf("%d", &n);
+    int m;
+    printf("Informe a dimensÃ£o da matriz quadrada: ");
+    scanf("%d", &m);
 
-    // Aloca memória para as matrizes A e B
-    int **A = malloc(n * sizeof(int *));
-    int **B = malloc(n * sizeof(int *));
-    for (int i = 0; i < n; i++) {
-        A[i] = malloc(n * sizeof(int));
-        B[i] = malloc(n * sizeof(int));
+    // Aloca memÃ³ria para as matrizes A e B
+    int **B = malloc(m * sizeof(int *));
+    int **C = malloc(m * sizeof(int *));
+    for (int i = 0; i < m; i++) {
+        B[i] = malloc(m * sizeof(int));
+        C[i] = malloc(m * sizeof(int));
     }
 
-    printf("Digite os elementos da matriz A:\n");
-    for (int i = 0; i < n; i++)
-        for (int j = 0; j < n; j++)
-            scanf("%d", &A[i][j]);
-
     printf("Digite os elementos da matriz B:\n");
-    for (int i = 0; i < n; i++)
-        for (int j = 0; j < n; j++)
+    for (int i = 0; i < m; i++)
+        for (int j = 0; j < m; j++)
             scanf("%d", &B[i][j]);
 
-    escreverArquivo("matriz.txt", A, B, n);
+    printf("Digite os elementos da matriz C:\n");
+    for (int i = 0; i < m; i++)
+        for (int j = 0; j < m; j++)
+            scanf("%d", &C[i][j]);
 
-    // Lê as matrizes do arquivo
-    int **matA, **matB;
-    lerArquivo("matriz.txt", &matA, &matB, &n);
+    escreveArquivo("matriz.txt", B, C, m);
+
+    // LÃª as matrizes do arquivo
+    int **matrizB, **matrizC;
+    leArquivo("matriz.txt", &matrizB, &matrizC, &m);
 
     // Soma as matrizes
-    int **S = malloc(n * sizeof(int *));
-    for (int i = 0; i < n; i++)
-        S[i] = malloc(n * sizeof(int));
-    somarMatrizes(matA, matB, n, S);
+    int **K = malloc(m * sizeof(int *));
+    for (int i = 0; i < m; i++)
+        K[i] = malloc(m * sizeof(int));
+    somaMatrizes(matrizB, mattizC, m, K);
 
     // Exibe a matriz soma
     printf("Matriz Soma:\n");
-    imprimirMatriz(S, n);
+    imprimeMatriz(K, m);
 
-    // Libera memória
-    for (int i = 0; i < n; i++) {
-        free(A[i]); free(B[i]);
-        free(matA[i]); free(matB[i]); free(S[i]);
+    // Libera memÃ³ria
+    for (int i = 0; i < m; i++) {
+        free(B[i]); free(C[i]);
+        free(matrizB[i]); free(matrizC[i]); free(K[i]);
     }
-    free(A); free(B);
-    free(matA); free(matB); free(S);
+    free(B); free(C);
+    free(matrizB); free(matrizC); free(K);
     getchar();
     return 0;
 }
